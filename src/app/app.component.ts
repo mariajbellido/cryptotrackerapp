@@ -7,7 +7,7 @@ interface CoinsInterface {
   symbol: string;
   image: string;
   current_price: number;
-  price_change_percentage_24: number;
+  price_change_percentage_24h: number;
   total_volume: number;
 }
 
@@ -20,6 +20,14 @@ export class AppComponent implements OnInit {
 
 
   coins: CoinsInterface[] = [];
+  titles: string[] = [
+    "#",
+    "Crypto",
+    "Price",
+    "Price Change",
+    "24h Volume"
+
+  ]
 
 
   constructor (private http: HttpClient) {}
