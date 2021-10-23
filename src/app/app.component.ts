@@ -20,24 +20,30 @@ export class AppComponent implements OnInit {
 
 
   coins: CoinsInterface[] = [];
+  filteredCoins: CoinsInterface[] = [];
   titles: string[] = [
     "#",
     "Crypto",
     "Price",
     "Price Change",
     "24h Volume"
-
   ]
 
+  searchText: string = '';
 
   constructor (private http: HttpClient) {}
+
+  searchCoin(){
+    this.filteredCoins = this.coins.filter( (coin) => coin.name.toLowerCase().includes(this.searchText.toLowerCase()) || coin.symbol.toLowerCase().includes(this.searchText.toLowerCase()));
+  }
 
   ngOnInit() {
     this.http.get<CoinsInterface[]>('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&sparkline=false')
     .subscribe(
     (response) => {
-      console.log(response)
-      this.coins = response
+      // console.log(response)
+      this.coins = response;
+      this.filteredCoins = response;
     },
     (error) => console.log(error)
     );
